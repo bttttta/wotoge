@@ -1,0 +1,12 @@
+{
+	"Notes":[
+		{"id": 0, "type": "bpm", "value": 120},
+		{"id": 1, "type": "bottom", "time": 2, "lane": 0},
+		{"id": 2, "type": "tap", "time": 2.5, "x": 500, "y": 800},
+		{"id": 3, "type": "bottom", "time": 3, "lane": 1},
+		{"id": 4, "type": "tap", "time": 3.5, "x": 700, "y": 1200},
+		{"id": 5, "type": "tap", "time": 3.625, "x": 780, "y": 1280},
+		{"id": 6, "type": "tap", "time": 3.75, "x": 860, "y": 1360},
+		{"id": 7, "type": "tap", "time": 3.875, "x": 940, "y": 1440}
+	]
+}
