@@ -7,10 +7,13 @@ using UnityEngine;
 [Serializable]
 public class NoteData {
     public int id;
-    public string type;
-    public float value;
-    public float time;
-    public int lane; public int x; public int y;
+    public string type; // ノーツor命令の種類
+    public float value; // 命令の値
+    public float time; // (最初の)処理すべきタイミング
+    public float length; // 
+    public int x; public int y; // (最初の)座標。Bottom以外
+    public int lane; // 登場するレーン。Bottomのみ
+    public float angle; // 角度。Flickのみ
 
     // ノーツかどうか(bpmなどはfalse)
     public bool IsNote() {
@@ -56,6 +59,22 @@ public class JsonLoader
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
                         notes.Add(tap);
+                        break;
+                    case "flick":
+                        NoteFlick flick = go.AddComponent<NoteFlick>();
+                        flick.time = note.time;
+                        flick.pos = new Unity.Mathematics.int2(note.x, note.y);
+                        flick.bpm = bpm;
+                        flick.angle = note.angle;
+                        notes.Add(flick);
+                        break;
+                    case "long":
+                        NoteLong nLong = go.AddComponent<NoteLong>();
+                        nLong.time = note.time;
+                        nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
+                        nLong.length = note.length;
+                        nLong.bpm = bpm;
+                        notes.Add(nLong);
                         break;
                 }
                 if(parent != null) {

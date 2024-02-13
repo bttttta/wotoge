@@ -10,6 +10,8 @@ public enum NoteState
     Ready, // ”»’è‰Â”\
     Hit, // “ü—Í‚³‚ê‚½uŠÔ
     Lost, // Œ©“¦‚µ‚½uŠÔ
+    Hold, // ’·‰Ÿ‚µ‚µ‚Ä‚é
+    Switch, // ’·‰Ÿ‚µ’†’f’†
     Judged, // ”»’è•\¦‚µ‚Ä‚é
     Disappeared, // ‚à‚¤Á‚¦‚½
 }
