@@ -42,14 +42,14 @@ public class NoteBottom : Note
             case NoteState.Appeared:
                 position.y = DeltaBeat() * bottom_speed + bottom_bar_y;
                 noteTransform.position = position;
-                if(time - current_time < time_far) {
+                if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
                 position.y = DeltaBeat() * bottom_speed + bottom_bar_y;
                 noteTransform.position = position;
-                if(current_time - time > time_far) {
+                if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }
                 break;

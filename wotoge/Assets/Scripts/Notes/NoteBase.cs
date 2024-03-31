@@ -18,14 +18,15 @@ public enum NoteState
 
 public abstract class Note : MonoBehaviour
 {
+    public string type; // ノーツの種類名
     public float time; // 出るタイミング。秒
     public float bpm; // 出るときのBPM
-    protected float current_time = 0f; // 現在の時刻
     public NoteState state = NoteState.NotExisted;
     public JudgeType judge;
 
     protected NoteSpriteManager noteSpriteManager;
     protected JudgeSpriteManager judgeSpriteManager;
+    protected TimeManager timeManager;
 
     public float result_time = 0f; // 判定表示された時間
     public const float time_result = 1f; // 判定表示される時間
@@ -38,12 +39,13 @@ public abstract class Note : MonoBehaviour
     {
         noteSpriteManager = GameObject.Find("NoteSpriteManager").GetComponent<NoteSpriteManager>();
         judgeSpriteManager = GameObject.Find("JudgeSpriteManager").GetComponent<JudgeSpriteManager>();
+        timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
+
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        current_time += Time.deltaTime;
     }
 
     // fingerPathの指がノートに当たっているか
@@ -58,15 +60,15 @@ public abstract class Note : MonoBehaviour
 
     // timeまで何拍あるか
     protected float DeltaBeat(float? time = null) {
-        float delta = this.time - (time ?? current_time);
+        float delta = this.time - (time ?? timeManager.music_time);
         return delta * (bpm / 60);
     }
 
     // 今判定したらどの判定になるか 時刻差のみを見る
     protected JudgeType GetJudgeNow() {
-        if(Mathf.Abs(time - current_time) <= time_just) {
+        if(Mathf.Abs(time - timeManager.music_time) <= time_just) {
             return JudgeType.Just;
-        } else if(Mathf.Abs(time - current_time) <= time_near) {
+        } else if(Mathf.Abs(time - timeManager.music_time) <= time_near) {
             return JudgeType.Near;
         } else {
             return JudgeType.Far;

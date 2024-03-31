@@ -36,11 +36,12 @@ public class JsonLoader
         stageData = JsonUtility.FromJson<StageData>(json);
     }
 
-    public (GameObject[], Note[]) GetNotes(GameObject parent = null) {
+    public (GameObject[], Note[], Event[]) GetNotes(GameObject parent = null) {
         if (stageData == null) { throw new NullReferenceException(); }
         
         List<GameObject> gameObjects = new List<GameObject>(stageData.Notes.Length);
         List<Note> notes = new List<Note>(stageData.Notes.Length);
+        List<Event> events = new List<Event>(stageData.Notes.Length);
         float bpm = 120;
         foreach(NoteData note in stageData.Notes) {
             if (note.IsNote()) {
@@ -48,6 +49,7 @@ public class JsonLoader
                 switch (note.type) {
                     case "bottom":
                         NoteBottom bottom = go.AddComponent<NoteBottom>();
+                        bottom.type = note.type;
                         bottom.time = note.time;
                         bottom.lane = note.lane;
                         bottom.bpm = bpm;
@@ -55,6 +57,7 @@ public class JsonLoader
                         break;
                     case "tap":
                         NoteTap tap = go.AddComponent<NoteTap>();
+                        tap.type = note.type;
                         tap.time = note.time;
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
@@ -62,6 +65,7 @@ public class JsonLoader
                         break;
                     case "flick":
                         NoteFlick flick = go.AddComponent<NoteFlick>();
+                        flick.type = note.type;
                         flick.time = note.time;
                         flick.pos = new Unity.Mathematics.int2(note.x, note.y);
                         flick.bpm = bpm;
@@ -70,6 +74,7 @@ public class JsonLoader
                         break;
                     case "long":
                         NoteLong nLong = go.AddComponent<NoteLong>();
+                        nLong.type = note.type;
                         nLong.time = note.time;
                         nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
                         nLong.length = note.length;
@@ -82,9 +87,18 @@ public class JsonLoader
                 }
                 gameObjects.Add(go);
             } else {
+                // Event
+                GameObject go = new GameObject($"Event_{note.id}");
+                Event nEvent = go.AddComponent<Event>();
+                nEvent.type = note.type;
+                nEvent.time = note.time;
+                nEvent.value = note.value;
+                nEvent.bpm = bpm;
                 switch(note.type) {
                     case "bpm":
-                        bpm = note.value; break;
+                        bpm = note.value;
+                        nEvent.bpm = bpm;
+                        break;
                     default:
                         break;
                 }
@@ -92,6 +106,6 @@ public class JsonLoader
 
         }
 
-        return (gameObjects.ToArray(), notes.ToArray());
+        return (gameObjects.ToArray(), notes.ToArray(), events.ToArray());
     }
 }

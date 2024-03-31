@@ -51,13 +51,13 @@ public class NoteLong : Note
                 break;
             case NoteState.Appeared:
                 timingTransform.localScale = Vector3.one * (delta * 2f);
-                if(time - current_time < time_far) {
+                if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
                 timingTransform.localScale = Vector3.one * (delta * 2f);
-                if(current_time - time > time_far) {
+                if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }
                 break;
@@ -97,7 +97,7 @@ public class NoteLong : Note
         if(state != NoteState.Ready) { return -1; }
         // ‹——£‚ÌŒvŽZ
         float distance2 = Mathf.Pow(fingerPath.Position.x - pos.x, 2) + Mathf.Pow(fingerPath.Position.y - pos.y, 2);
-        float tDistance2 = Mathf.Pow(time - current_time, 2);
+        float tDistance2 = Mathf.Pow(time - timeManager.music_time, 2);
 
         if(fingerPath.Down) {
             // ‰Ÿ‚µ”»’è
