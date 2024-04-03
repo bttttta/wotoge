@@ -19,6 +19,7 @@ public enum NoteState
 public abstract class Note : MonoBehaviour
 {
     public string type; // ノーツの種類名
+    public float beat; // 出るタイミング。拍
     public float time; // 出るタイミング。秒
     public float bpm; // 出るときのBPM
     public NoteState state = NoteState.NotExisted;
@@ -40,7 +41,7 @@ public abstract class Note : MonoBehaviour
         noteSpriteManager = GameObject.Find("NoteSpriteManager").GetComponent<NoteSpriteManager>();
         judgeSpriteManager = GameObject.Find("JudgeSpriteManager").GetComponent<JudgeSpriteManager>();
         timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
-
+        time = timeManager.BeatToTime(beat);
     }
 
     // Update is called once per frame

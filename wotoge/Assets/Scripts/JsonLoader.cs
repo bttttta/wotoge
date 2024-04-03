@@ -50,7 +50,7 @@ public class JsonLoader
                     case "bottom":
                         NoteBottom bottom = go.AddComponent<NoteBottom>();
                         bottom.type = note.type;
-                        bottom.time = note.time;
+                        bottom.beat = note.time;
                         bottom.lane = note.lane;
                         bottom.bpm = bpm;
                         notes.Add(bottom);
@@ -58,7 +58,7 @@ public class JsonLoader
                     case "tap":
                         NoteTap tap = go.AddComponent<NoteTap>();
                         tap.type = note.type;
-                        tap.time = note.time;
+                        tap.beat = note.time;
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
                         notes.Add(tap);
@@ -66,7 +66,7 @@ public class JsonLoader
                     case "flick":
                         NoteFlick flick = go.AddComponent<NoteFlick>();
                         flick.type = note.type;
-                        flick.time = note.time;
+                        flick.beat = note.time;
                         flick.pos = new Unity.Mathematics.int2(note.x, note.y);
                         flick.bpm = bpm;
                         flick.angle = note.angle;
@@ -75,7 +75,7 @@ public class JsonLoader
                     case "long":
                         NoteLong nLong = go.AddComponent<NoteLong>();
                         nLong.type = note.type;
-                        nLong.time = note.time;
+                        nLong.beat = note.time;
                         nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
                         nLong.length = note.length;
                         nLong.bpm = bpm;
@@ -91,7 +91,7 @@ public class JsonLoader
                 GameObject go = new GameObject($"Event_{note.id}");
                 Event nEvent = go.AddComponent<Event>();
                 nEvent.type = note.type;
-                nEvent.time = note.time;
+                nEvent.beat = note.time;
                 nEvent.value = note.value;
                 nEvent.bpm = bpm;
                 switch(note.type) {

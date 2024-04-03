@@ -47,7 +47,22 @@ public class TimeManager : MonoBehaviour
     }
 
     // 1”‚ª‰½•b‚©
-    static float BeatLength(float bpm) {
+    public static float BeatLength(float bpm) {
         return 60 / bpm;
+    }
+
+    // ”‚©‚ç•b‚É•ÏŠ·‚·‚é
+    public float BeatToTime(float beat) {
+        float ret = 0;
+        float bpm = startBpm;
+        float lastBeat = 0;
+        foreach (Event bpmEvent in bpmEvents) {
+            if(beat < bpmEvent.beat) { break; }
+            ret += BeatLength(bpm) * (bpmEvent.beat - lastBeat);
+            lastBeat = bpmEvent.beat;
+            bpm = bpmEvent.value;
+        }
+        ret += BeatLength(bpm) * (beat - lastBeat);
+        return ret;
     }
 }

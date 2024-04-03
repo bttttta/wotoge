@@ -2,13 +2,13 @@
 	"Notes":[
 		{"id": 0, "type": "bpm", "value": 120},
 		{"id": 1, "type": "bottom", "time": 0, "lane": 0},
-		{"id": 2, "type": "flick", "time": 0.5, "x": 500, "y": 1200, "angle": 60},
-		{"id": 3, "type": "flick", "time": 0.5, "x": 300, "y": 600, "angle": 240},
-		{"id": 4, "type": "bottom", "time": 1, "lane": 1},
-		{"id": 5, "type": "flick", "time": 1, "x": 800, "y": 1000, "angle": 150},
-		{"id": 6, "type": "tap", "time": 1.5, "x": 100, "y": 1200},
-		{"id": 7, "type": "tap", "time": 1.625, "x": 390, "y": 1280},
-		{"id": 8, "type": "tap", "time": 1.75, "x": 680, "y": 1360},
-		{"id": 9, "type": "tap", "time": 1.875, "x": 970, "y": 1440}
+		{"id": 2, "type": "flick", "time": 1, "x": 500, "y": 1200, "angle": 60},
+		{"id": 3, "type": "flick", "time": 1, "x": 300, "y": 600, "angle": 240},
+		{"id": 4, "type": "bottom", "time": 2, "lane": 1},
+		{"id": 5, "type": "flick", "time": 2, "x": 800, "y": 1000, "angle": 150},
+		{"id": 6, "type": "tap", "time": 3, "x": 100, "y": 1200},
+		{"id": 7, "type": "tap", "time": 3.25, "x": 390, "y": 1280},
+		{"id": 8, "type": "tap", "time": 3.5, "x": 680, "y": 1360},
+		{"id": 9, "type": "tap", "time": 3.75, "x": 970, "y": 1440}
 	]
 }
