@@ -93,4 +93,12 @@ public abstract class Note : MonoBehaviour
         result.transform.parent = this.transform;
         return result;
     }
+
+    // ”»’è•\¦—p‚ÌqGameObject‚ğì¬‚·‚é
+    protected GameObject CreateJudgeGameObject() {
+        GameObject result = new GameObject($"{this.name}_Judge");
+        _ = result.AddComponent<SpriteRenderer>();
+        result.transform.parent = this.transform;
+        return result;
+    }
 }

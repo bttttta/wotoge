@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum JudgeType
 {
-    Just, Near, Far,
+    None, Just, Near, Far,
 }
 
 public class JudgeSpriteManager : MonoBehaviour

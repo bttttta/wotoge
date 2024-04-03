@@ -9,8 +9,8 @@ public class NoteData {
     public int id;
     public string type; // ノーツor命令の種類
     public float value; // 命令の値
-    public float time; // (最初の)処理すべきタイミング
-    public float length; // 
+    public float time; // (最初の)処理すべきタイミング。拍
+    public float length; // 伸ばす長さ。拍
     public int x; public int y; // (最初の)座標。Bottom以外
     public int lane; // 登場するレーン。Bottomのみ
     public float angle; // 角度。Flickのみ

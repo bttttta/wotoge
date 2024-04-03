@@ -50,6 +50,7 @@ public class FingerPath
         Position = position;
     }
     public void Release() {
+        Debug.Log("Release");
         IsActive = false;
     }
     
