@@ -18,7 +18,8 @@ public enum NoteState
 
 public abstract class Note : MonoBehaviour
 {
-    public string type; // ノーツの種類名
+    public string type_str; // ノーツの種類名
+    public NoteType type; // ノーツの種類
     public float beat; // 出るタイミング。拍
     public float time; // 出るタイミング。秒
     public float bpm; // 出るときのBPM

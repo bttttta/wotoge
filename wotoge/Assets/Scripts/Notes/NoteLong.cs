@@ -27,6 +27,11 @@ public class NoteLong : Note
     SpriteRenderer judgeSpriteRenderer;
     Vector3 notePosition;
 
+    public NoteLong(){
+        type_str = "long";
+        type = NoteType.Long;
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {

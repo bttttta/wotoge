@@ -16,6 +16,11 @@ public class NoteTap : Note
     SpriteRenderer timingSpriteRenderer;
     Vector3 notePosition;
 
+    public NoteTap(){
+        type_str = "tap";
+        type = NoteType.Tap;
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {

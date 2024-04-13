@@ -15,6 +15,11 @@ public class NoteBottom : Note
     const int bottom_size = 1080 / 4;
     const int bottom_speed = (1920 - 160) / 4;
 
+    public NoteBottom(){
+        type_str = "bottom";
+        type = NoteType.Bottom;
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {

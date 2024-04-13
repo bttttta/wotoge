@@ -49,7 +49,6 @@ public class JsonLoader
                 switch (note.type) {
                     case "bottom":
                         NoteBottom bottom = go.AddComponent<NoteBottom>();
-                        bottom.type = note.type;
                         bottom.beat = note.time;
                         bottom.lane = note.lane;
                         bottom.bpm = bpm;
@@ -57,7 +56,6 @@ public class JsonLoader
                         break;
                     case "tap":
                         NoteTap tap = go.AddComponent<NoteTap>();
-                        tap.type = note.type;
                         tap.beat = note.time;
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
@@ -65,7 +63,6 @@ public class JsonLoader
                         break;
                     case "flick":
                         NoteFlick flick = go.AddComponent<NoteFlick>();
-                        flick.type = note.type;
                         flick.beat = note.time;
                         flick.pos = new Unity.Mathematics.int2(note.x, note.y);
                         flick.bpm = bpm;
@@ -74,7 +71,6 @@ public class JsonLoader
                         break;
                     case "long":
                         NoteLong nLong = go.AddComponent<NoteLong>();
-                        nLong.type = note.type;
                         nLong.beat = note.time;
                         nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
                         nLong.length = note.length;

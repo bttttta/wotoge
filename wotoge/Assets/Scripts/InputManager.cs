@@ -34,6 +34,7 @@ public class FingerPath
     }
 
     public void Activate(Vector2 position, int fingerId, NotesManager notesManager) {
+        Debug.Log($"Activate at {position}");
         IsActive = true;
         Down = true;
         Position = AdjustPosition(position);
@@ -50,7 +51,6 @@ public class FingerPath
         Position = position;
     }
     public void Release() {
-        Debug.Log("Release");
         IsActive = false;
     }
     

@@ -16,6 +16,11 @@ public class NoteFlick : Note
     SpriteRenderer timingSpriteRenderer;
     Vector3 notePosition;
 
+    public NoteFlick(){
+        type_str = "flick";
+        type = NoteType.Flick;
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {
