@@ -8,8 +8,6 @@ public class NoteFlick : Note
     public int2 pos; // ノートの位置
     public float angle; // 角度(degree) 0で上、90で左
 
-    GameObject noteObject;
-    GameObject timingObject;
     Transform noteTransform;
     Transform timingTransform;
     SpriteRenderer noteSpriteRenderer;

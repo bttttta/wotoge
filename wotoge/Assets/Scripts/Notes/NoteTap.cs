@@ -6,10 +6,6 @@ using UnityEngine.Android;
 
 public class NoteTap : Note
 {
-    public int2 pos; // ノートの位置。
-
-    GameObject noteObject;
-    GameObject timingObject;
     Transform noteTransform;
     Transform timingTransform;
     SpriteRenderer noteSpriteRenderer;

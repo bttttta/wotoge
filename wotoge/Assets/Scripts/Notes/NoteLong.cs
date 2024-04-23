@@ -16,9 +16,6 @@ public class NoteLong : Note
 
     public FingerPath HoldingFinger; // ’·‰Ÿ‚µÅ’†‚Ìw
 
-    GameObject noteObject;
-    GameObject timingObject;
-    GameObject judgeObject;
     Transform noteTransform;
     Transform timingTransform;
     Transform judgeTransform;

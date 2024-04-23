@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class NoteBottom : Note
 {
     public int lane; // ノートの出るレーン。0/1/2/3
 
-    GameObject noteObject;
     Transform noteTransform;
     SpriteRenderer spriteRenderer;
     Vector3 position;
@@ -18,6 +18,7 @@ public class NoteBottom : Note
     public NoteBottom(){
         type_str = "bottom";
         type = NoteType.Bottom;
+        pos = new int2((int)((0.5 + lane) * bottom_size), 2000);
     }
 
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class NoteBottom : Note
         noteTransform = noteObject.transform;
         spriteRenderer = noteObject.GetComponent<SpriteRenderer>();
         position = new Vector3((float)((0.5 + lane) * bottom_size), 2000, 0);
-        noteTransform.position = position;
+        noteTransform.position = new Vector3(pos.x, pos.y, 0);
         noteObject.SetActive(false);
     }
 

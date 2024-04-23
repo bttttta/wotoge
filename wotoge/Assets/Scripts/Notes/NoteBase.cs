@@ -23,8 +23,14 @@ public abstract class Note : MonoBehaviour
     public float beat; // 出るタイミング。拍
     public float time; // 出るタイミング。秒
     public float bpm; // 出るときのBPM
+    public int2 pos; // ノートの出る座標
     public NoteState state = NoteState.NotExisted;
     public JudgeType judge;
+
+    protected GameObject noteObject; // ノーツ本体のGameObject
+    protected GameObject timingObject; // タイミング枠のGameObject
+    protected GameObject judgeObject; // 判定表示のGameObject
+    protected GameObject collisionObject; // 当たり判定用のGameObject
 
     protected NoteSpriteManager noteSpriteManager;
     protected JudgeSpriteManager judgeSpriteManager;
