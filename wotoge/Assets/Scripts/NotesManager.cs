@@ -7,9 +7,9 @@ public class NotesManager : MonoBehaviour
 {
     public TextAsset StageJson;
 
-    public GameObject[] NotesObject;
-    public Note[] Notes;
-    public Event[] Events;
+    public GameObject[] NotesObject { get; private set; }
+    public Note[] Notes { get; private set; }
+    public Event[] Events { get; private set; }
     protected float time = 0;
 
     // Start is called before the first frame update
