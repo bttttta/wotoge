@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42f77f84472dfd43a3f31ae339ba99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StageData: {fileID: 4900000, guid: 68b976b539339934fa9a557ba3513430, type: 3}
+  StageJson: {fileID: 4900000, guid: 68b976b539339934fa9a557ba3513430, type: 3}
   NotesObject: []
   Notes: []
   Events: []
