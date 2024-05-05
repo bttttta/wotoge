@@ -237,9 +237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StageJson: {fileID: 4900000, guid: 68b976b539339934fa9a557ba3513430, type: 3}
-  NotesObject: []
-  Notes: []
-  Events: []
 --- !u!4 &229276152
 Transform:
   m_ObjectHideFlags: 0
@@ -496,7 +493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535120662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 541.0783, y: 952.4039, z: 87164.51}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1014,6 +1011,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dff7df6cf34c741a3f90981dbef6d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrefubJust: {fileID: 2447299708992039654, guid: 8d15dfa4f19e17b40bc70096ca1af08e, type: 3}
+  PrefubNear: {fileID: 2447299708992039654, guid: a4bfd92ff43485144ba57fd911bb2575, type: 3}
+  PrefubFar: {fileID: 2447299708992039654, guid: 25610e081a8d9264d8d57adbb51c0edd, type: 3}
   SpriteJust: {fileID: 1898533463, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
   SpriteNear: {fileID: -1399101396, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
   SpriteFar: {fileID: 1431124425, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
@@ -1025,7 +1025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737934826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -541.0783, y: -952.4039, z: -87164.51}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -7,7 +7,6 @@ using static UnityEditor.PlayerSettings;
 
 public class NoteLong : Note
 {
-    public int2 pos; // ノートの位置。
     public float length; // 長押しの時間。拍
     public float release_beat; // 長押しを離すタイミング。拍
     public float release_time; // 長押しを離すタイミング。秒
@@ -18,10 +17,8 @@ public class NoteLong : Note
 
     Transform noteTransform;
     Transform timingTransform;
-    Transform judgeTransform;
     SpriteRenderer noteSpriteRenderer;
     SpriteRenderer timingSpriteRenderer;
-    SpriteRenderer judgeSpriteRenderer;
     Vector3 notePosition;
 
     public NoteLong(){
@@ -48,11 +45,6 @@ public class NoteLong : Note
         timingTransform.localScale = Vector3.one * 4f;
         timingSpriteRenderer = timingObject.GetComponent<SpriteRenderer>();
         timingObject.SetActive(false);
-        judgeObject = CreateJudgeGameObject();
-        judgeTransform = judgeObject.transform;
-        judgeTransform.position = new Vector3(pos.x, pos.y, 0);
-        judgeSpriteRenderer = judgeObject.GetComponent<SpriteRenderer>();
-        judgeObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -82,10 +74,8 @@ public class NoteLong : Note
                 break;
             case NoteState.Hit:
                 timingObject.SetActive(false);
-                judgeObject.SetActive(true);
-                noteTransform.localScale = Vector3.one;
                 judge = GetJudgeNow();
-                judgeSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Hold;
                 break;
             case NoteState.Hold:
@@ -102,8 +92,7 @@ public class NoteLong : Note
                         judge = JudgeType.Near;
                         timingObject.SetActive(false);
                         noteObject.SetActive(false);
-                        judgeObject.SetActive(true);
-                        judgeSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                        CreateJudgeGameObject(judge);
                         state = NoteState.Judged;
                     }
                 } else {
@@ -113,8 +102,7 @@ public class NoteLong : Note
                         judge = JudgeType.Just;
                         timingObject.SetActive(false);
                         noteObject.SetActive(false);
-                        judgeObject.SetActive(true);
-                        judgeSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                        CreateJudgeGameObject(judge);
                         state = NoteState.Judged;
                     } else {
                         state = NoteState.Switch;
@@ -124,13 +112,12 @@ public class NoteLong : Note
             case NoteState.Lost:
                 timingObject.SetActive(false);
                 judge = JudgeType.Far;
-                judgeSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Switch;
                 break;
             case NoteState.Judged:
                 result_time += Time.deltaTime;
                 if(result_time >= time_result) {
-                    judgeObject.SetActive(false);
                     state = NoteState.Disappeared;
                 }
                 break;

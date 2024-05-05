@@ -33,7 +33,7 @@ public abstract class Note : MonoBehaviour
     protected GameObject collisionObject; // 当たり判定用のGameObject
 
     protected NoteSpriteManager noteSpriteManager;
-    protected JudgeSpriteManager judgeSpriteManager;
+    protected JudgeObjectManager judgeObjectManager;
     protected TimeManager timeManager;
 
     public float result_time = 0f; // 判定表示された時間
@@ -46,7 +46,7 @@ public abstract class Note : MonoBehaviour
     protected virtual void Start()
     {
         noteSpriteManager = GameObject.Find("NoteSpriteManager").GetComponent<NoteSpriteManager>();
-        judgeSpriteManager = GameObject.Find("JudgeSpriteManager").GetComponent<JudgeSpriteManager>();
+        judgeObjectManager = GameObject.Find("JudgeSpriteManager").GetComponent<JudgeObjectManager>();
         timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
         time = timeManager.BeatToTime(beat);
     }
@@ -102,10 +102,8 @@ public abstract class Note : MonoBehaviour
     }
 
     // 判定表示用の子GameObjectを作成する
-    protected GameObject CreateJudgeGameObject() {
-        GameObject result = new GameObject($"{this.name}_Judge");
-        _ = result.AddComponent<SpriteRenderer>();
-        result.transform.parent = this.transform;
-        return result;
+    protected GameObject CreateJudgeGameObject(JudgeType judgeType) {
+        Vector3 position = new Vector3(pos.x, pos.y, 0);
+        return judgeObjectManager.Instantiate(judgeType, position, this.transform);
     }
 }

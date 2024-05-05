@@ -39,7 +39,7 @@ public class NotesManager : MonoBehaviour
                     case "bottom":
                         NoteBottom bottom = go.AddComponent<NoteBottom>();
                         bottom.beat = note.time;
-                        bottom.lane = note.lane;
+                        bottom.Lane = note.lane;
                         bottom.bpm = bpm;
                         notes.Add(bottom);
                         break;

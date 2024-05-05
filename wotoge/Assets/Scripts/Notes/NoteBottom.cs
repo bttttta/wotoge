@@ -5,7 +5,14 @@ using UnityEngine;
 
 public class NoteBottom : Note
 {
-    public int lane; // ノートの出るレーン。0/1/2/3
+    private int lane; // ノートの出るレーン。0/1/2/3
+    public int Lane {
+        get { return lane; }
+        set {
+            lane = value;
+            pos.x = (int)((0.5 + lane) * bottom_size);
+        }
+    }
 
     Transform noteTransform;
     SpriteRenderer spriteRenderer;
@@ -18,7 +25,7 @@ public class NoteBottom : Note
     public NoteBottom(){
         type_str = "bottom";
         type = NoteType.Bottom;
-        pos = new int2((int)((0.5 + lane) * bottom_size), 2000);
+        pos = new int2(0, 2000);
     }
 
     // Start is called before the first frame update
@@ -38,6 +45,7 @@ public class NoteBottom : Note
     {
         base.Update();
         var delta = DeltaBeat();
+        SetPosY();
         switch(state) {
             case NoteState.NotExisted:
                 if(delta <= 4f) {
@@ -46,37 +54,32 @@ public class NoteBottom : Note
                 }
                 break;
             case NoteState.Appeared:
-                position.y = DeltaBeat() * bottom_speed + bottom_bar_y;
-                noteTransform.position = position;
+                noteTransform.position = new Vector3(pos.x, pos.y, 0);
                 if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
-                position.y = DeltaBeat() * bottom_speed + bottom_bar_y;
-                noteTransform.position = position;
+                noteTransform.position = new Vector3(pos.x, pos.y, 0);
                 if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }
                 break;
             case NoteState.Hit:
-                noteTransform.localScale = Vector3.one;
-                noteTransform.position = new Vector3(position.x, 120, position.z);
+                noteObject.SetActive(false);
                 judge = GetJudgeNow();
-                spriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Judged;
                 break;
             case NoteState.Lost:
-                noteTransform.localScale = Vector3.one;
-                noteTransform.position = new Vector3(position.x, 120, position.z);
+                noteObject.SetActive(false);
                 judge = JudgeType.Far;
-                spriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Judged;
                 break;
             case NoteState.Judged:
                 result_time += Time.deltaTime;
                 if(result_time >= time_result) {
-                    noteObject.SetActive(false);
                     state = NoteState.Disappeared;
                 }
                 break;
@@ -84,6 +87,15 @@ public class NoteBottom : Note
                 break;
             default:
                 break;
+        }
+    }
+
+    void SetPosY() {
+        // pos.yを設定
+        if(state == NoteState.Appeared || state == NoteState.Ready) {
+            pos.y = (int)(DeltaBeat() * bottom_speed + bottom_bar_y);
+        } else {
+            pos.y = 120;
         }
     }
 

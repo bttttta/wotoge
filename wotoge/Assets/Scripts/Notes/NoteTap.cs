@@ -60,23 +60,22 @@ public class NoteTap : Note
                 }
                 break;
             case NoteState.Hit:
+                noteObject.SetActive(false);
                 timingObject.SetActive(false);
-                noteTransform.localScale = Vector3.one;
                 judge = GetJudgeNow();
-                noteSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Judged;
                 break;
             case NoteState.Lost:
+                noteObject.SetActive(false);
                 timingObject.SetActive(false);
-                noteTransform.localScale = Vector3.one;
                 judge = JudgeType.Far;
-                noteSpriteRenderer.sprite = judgeSpriteManager.GetSprite(judge);
+                CreateJudgeGameObject(judge);
                 state = NoteState.Judged;
                 break;
             case NoteState.Judged:
                 result_time += Time.deltaTime;
                 if(result_time >= time_result) {
-                    noteObject.SetActive(false);
                     state = NoteState.Disappeared;
                 }
                 break;
