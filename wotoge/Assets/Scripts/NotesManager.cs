@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotesManager : MonoBehaviour
-{
+public class NotesManager : SingletonMonoBehaviour<NotesManager> {
     public TextAsset StageJson;
 
     public GameObject[] NotesObject { get; private set; }
@@ -19,9 +18,8 @@ public class NotesManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     void InstantiateNotes(StageData stageData) {

@@ -14,7 +14,7 @@ public class FingerPath
     public Note DeterminedNote = null; // 確定済みのノート
     public Dictionary<Note, float> NominatedNote = new Dictionary<Note, float>(100); // 候補のノート
 
-    public NotesManager NotesManager;
+    readonly NotesManager notesManager = NotesManager.Instance;
 
     // タッチ座標→譜面座標に変換
     public Vector2 AdjustPosition(Vector2 position) {
@@ -33,7 +33,7 @@ public class FingerPath
         return result;
     }
 
-    public void Activate(Vector2 position, int fingerId, NotesManager notesManager) {
+    public void Activate(Vector2 position, int fingerId) {
         Debug.Log($"Activate at {position}");
         IsActive = true;
         Down = true;
@@ -42,7 +42,6 @@ public class FingerPath
         Delta = Vector2.zero;
         FingerId = fingerId;
         DeterminedNote = null;
-        NotesManager = notesManager;
     }
     public void MoveTo(Vector2 position) {
         if(position == Position) { return; }
@@ -60,7 +59,7 @@ public class FingerPath
         if(DeterminedNote == null) {
             // ノート確定していない場合
             // 候補ノートの検索
-            foreach(var note in NotesManager.Notes) {
+            foreach(var note in notesManager.Notes) {
                 float rate = note.CheckHit(this);
                 if(rate >= 0) {
                     NominatedNote.Add(note, rate);
@@ -89,12 +88,9 @@ public class FingerPath
     }
 }
 
-public class InputManager : MonoBehaviour
+public class InputManager : SingletonMonoBehaviour<InputManager>
 {
     // Start is called before the first frame update
-
-    public NotesManager NotesManager;
-
     int touchCount = 0; // fingersで使用している数
     FingerPath[] fingers;
 
@@ -119,7 +115,7 @@ public class InputManager : MonoBehaviour
                     // 使っていないfingers要素を検索しそこに入れる
                     for(int j = 0; j < maxFinger; j++) {
                         if(fingers[j].IsActive == false) {
-                            fingers[j].Activate(touch.position, touch.fingerId, NotesManager);
+                            fingers[j].Activate(touch.position, touch.fingerId);
                             break;
                         }
                     }

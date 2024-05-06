@@ -8,7 +8,7 @@ public enum NoteType
     Bottom, Tap, Flick, Long, Slide,
 }
 
-public class NoteSpriteManager : MonoBehaviour
+public class NoteSpriteManager : SingletonMonoBehaviour<NoteSpriteManager>
 {
     public Sprite SpriteBottom;
     public Sprite SpriteTap;

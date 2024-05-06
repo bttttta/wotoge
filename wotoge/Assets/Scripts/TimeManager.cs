@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
-{
-    public NotesManager notesManager; // BPMイベント監視用
+public class TimeManager : SingletonMonoBehaviour<TimeManager> {
     public AudioSource MusicPlayer; // 曲開始用
 
+    NotesManager notesManager; // BPMイベント監視用
     AudioSource SE_metronome; // メトロノーム音を鳴らす用の Audio Source
     Event[] bpmEvents; // BPM変更イベントのリスト
     float currentBpm; // 現在のBPM
@@ -20,9 +19,9 @@ public class TimeManager : MonoBehaviour
     public float music_beat { get; private set; } // 曲が始まってからの時間。拍
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         SE_metronome = GetComponent<AudioSource>();
+        notesManager = NotesManager.Instance;
         bpmEvents = notesManager.Events.Where(e => e.type == "bpm").ToArray();
         startBpm = currentBpm = (bpmEvents.Length > 0) ? (bpmEvents[0].value) : 120;
         scene_time = 0;
@@ -30,12 +29,11 @@ public class TimeManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if(music_time < 0 && music_time + Time.deltaTime >= 0) {
             MusicPlayer.Play();
         }
-        for(int i = 1; i <= 4;  i++) {
+        for(int i = 1; i <= 4; i++) {
             float introTime = -BeatLength(currentBpm) * i;
             if(music_time < introTime && music_time + Time.deltaTime >= introTime) {
                 SE_metronome.Play();
@@ -56,7 +54,7 @@ public class TimeManager : MonoBehaviour
         float ret = 0;
         float bpm = startBpm;
         float lastBeat = 0;
-        foreach (Event bpmEvent in bpmEvents) {
+        foreach(Event bpmEvent in bpmEvents) {
             if(beat < bpmEvent.beat) { break; }
             ret += BeatLength(bpm) * (bpmEvent.beat - lastBeat);
             lastBeat = bpmEvent.beat;

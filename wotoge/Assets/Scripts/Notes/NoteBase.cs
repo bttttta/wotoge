@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public enum NoteState
-{
+public enum NoteState {
     NotExisted, // まだ表示されていない
     Appeared, // 表示されてるけどまだ判定されない
     Ready, // 判定可能
@@ -16,8 +15,7 @@ public enum NoteState
     Disappeared, // もう消えた
 }
 
-public abstract class Note : MonoBehaviour
-{
+public abstract class Note : MonoBehaviour {
     public string type_str; // ノーツの種類名
     public NoteType type; // ノーツの種類
     public float beat; // 出るタイミング。拍
@@ -43,17 +41,15 @@ public abstract class Note : MonoBehaviour
     public const float time_just = 0.1f; // Just判定の時間(半径)
 
     // Start is called before the first frame update
-    protected virtual void Start()
-    {
-        noteSpriteManager = GameObject.Find("NoteSpriteManager").GetComponent<NoteSpriteManager>();
-        judgeObjectManager = GameObject.Find("JudgeSpriteManager").GetComponent<JudgeObjectManager>();
-        timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
+    protected virtual void Start() {
+        noteSpriteManager = NoteSpriteManager.Instance;
+        judgeObjectManager = JudgeObjectManager.Instance;
+        timeManager = TimeManager.Instance;
         time = timeManager.BeatToTime(beat);
     }
 
     // Update is called once per frame
-    protected virtual void Update()
-    {
+    protected virtual void Update() {
     }
 
     // fingerPathの指がノートに当たっているか

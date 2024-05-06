@@ -7,22 +7,10 @@ public enum JudgeType {
     None, Just, Near, Far,
 }
 
-public class JudgeObjectManager : MonoBehaviour {
+public class JudgeObjectManager : SingletonMonoBehaviour<JudgeObjectManager> {
     public GameObject PrefubJust;
     public GameObject PrefubNear;
     public GameObject PrefubFar;
-    public Sprite SpriteJust;
-    public Sprite SpriteNear;
-    public Sprite SpriteFar;
-
-    public Sprite GetSprite(JudgeType type) {
-        return type switch {
-            JudgeType.Just => SpriteJust,
-            JudgeType.Near => SpriteNear,
-            JudgeType.Far => SpriteFar,
-            _ => null,
-        };
-    }
 
     public GameObject Instantiate(JudgeType type, Vector3 position, Transform parent) {
         GameObject prefub = type switch {
