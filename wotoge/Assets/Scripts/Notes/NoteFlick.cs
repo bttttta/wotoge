@@ -8,9 +8,7 @@ public class NoteFlick : Note
     public float angle; // äpìx(degree) 0Ç≈è„ÅA90Ç≈ç∂
 
     Transform noteTransform;
-    Transform timingTransform;
     SpriteRenderer noteSpriteRenderer;
-    SpriteRenderer timingSpriteRenderer;
     Vector3 notePosition;
 
     public NoteFlick(){
@@ -29,12 +27,7 @@ public class NoteFlick : Note
         noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
         noteObject.SetActive(false);
         timingObject = CreateTimingGameObject(NoteType.Flick);
-        timingTransform = timingObject.transform;
-        timingTransform.position = new Vector3(pos.x, pos.y, 0);
-        timingTransform.localScale = Vector3.one * 4f;
-        timingTransform.eulerAngles = noteTransform.eulerAngles;
-        timingSpriteRenderer = timingObject.GetComponent<SpriteRenderer>();
-        timingObject.SetActive(false);
+        timingObject.EularAngles = noteTransform.eulerAngles;
     }
 
     // Update is called once per frame
@@ -51,13 +44,13 @@ public class NoteFlick : Note
                 }
                 break;
             case NoteState.Appeared:
-                timingTransform.localScale = Vector3.one * (delta * 2f);
+                timingObject.SetTimingScale(delta);
                 if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
-                timingTransform.localScale = Vector3.one * (Mathf.Abs(delta) * 2f);
+                timingObject.SetTimingScale(delta);
                 if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }

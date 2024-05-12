@@ -26,11 +26,12 @@ public abstract class Note : MonoBehaviour {
     public JudgeType judge;
 
     protected GameObject noteObject; // ノーツ本体のGameObject
-    protected GameObject timingObject; // タイミング枠のGameObject
+    protected ObjectTiming timingObject; // タイミング枠のGameObject
     protected GameObject judgeObject; // 判定表示のGameObject
     protected GameObject collisionObject; // 当たり判定用のGameObject
 
     protected NoteSpriteManager noteSpriteManager;
+    protected TimingObjectManager timingObjectManager;
     protected JudgeObjectManager judgeObjectManager;
     protected TimeManager timeManager;
 
@@ -44,6 +45,7 @@ public abstract class Note : MonoBehaviour {
     protected virtual void Start() {
         noteSpriteManager = NoteSpriteManager.Instance;
         judgeObjectManager = JudgeObjectManager.Instance;
+        timingObjectManager = TimingObjectManager.Instance;
         timeManager = TimeManager.Instance;
         time = timeManager.BeatToTime(beat);
     }
@@ -89,12 +91,9 @@ public abstract class Note : MonoBehaviour {
     }
 
     // タイミング表示用の子GameObjectを作成する
-    protected GameObject CreateTimingGameObject(NoteType noteType) {
-        GameObject result = new GameObject($"{this.name}_Timing");
-        SpriteRenderer spriteRenderer = result.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = noteSpriteManager.GetTimingSprite(noteType);
-        result.transform.parent = this.transform;
-        return result;
+    protected ObjectTiming CreateTimingGameObject(NoteType noteType) {
+        Vector3 position = new Vector3(pos.x, pos.y, 0);
+        return timingObjectManager.Instantiate(noteType, position, this.transform);
     }
 
     // 判定表示用の子GameObjectを作成する

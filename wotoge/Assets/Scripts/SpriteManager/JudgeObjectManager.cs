@@ -20,7 +20,7 @@ public class JudgeObjectManager : SingletonMonoBehaviour<JudgeObjectManager> {
             _ => null,
         };
         GameObject gameObject = Instantiate(prefub, position, Quaternion.identity, parent);
-        gameObject.name = $"{parent.name}_Note";
+        gameObject.name = $"{parent.name}_Judge";
         return gameObject;
     }
 

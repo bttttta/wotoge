@@ -7,9 +7,7 @@ using UnityEngine.Android;
 public class NoteTap : Note
 {
     Transform noteTransform;
-    Transform timingTransform;
     SpriteRenderer noteSpriteRenderer;
-    SpriteRenderer timingSpriteRenderer;
     Vector3 notePosition;
 
     public NoteTap(){
@@ -27,11 +25,6 @@ public class NoteTap : Note
         noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
         noteObject.SetActive(false);
         timingObject = CreateTimingGameObject(NoteType.Tap);
-        timingTransform = timingObject.transform;
-        timingTransform.position = new Vector3(pos.x, pos.y, 0);
-        timingTransform.localScale = Vector3.one * 4f;
-        timingSpriteRenderer = timingObject.GetComponent<SpriteRenderer>();
-        timingObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,13 +41,13 @@ public class NoteTap : Note
                 }
                 break;
             case NoteState.Appeared:
-                timingTransform.localScale = Vector3.one * (delta * 2f);
+                timingObject.SetTimingScale(delta);
                 if (time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
-                timingTransform.localScale = Vector3.one * (delta * 2f);
+                timingObject.SetTimingScale(delta);
                 if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }

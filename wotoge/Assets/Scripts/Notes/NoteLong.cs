@@ -16,9 +16,7 @@ public class NoteLong : Note
     public FingerPath HoldingFinger; // í∑âüÇµç≈íÜÇÃéw
 
     Transform noteTransform;
-    Transform timingTransform;
     SpriteRenderer noteSpriteRenderer;
-    SpriteRenderer timingSpriteRenderer;
     Vector3 notePosition;
 
     public NoteLong(){
@@ -40,11 +38,6 @@ public class NoteLong : Note
         noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
         noteObject.SetActive(false);
         timingObject = CreateTimingGameObject(NoteType.Long);
-        timingTransform = timingObject.transform;
-        timingTransform.position = new Vector3(pos.x, pos.y, 0);
-        timingTransform.localScale = Vector3.one * 4f;
-        timingSpriteRenderer = timingObject.GetComponent<SpriteRenderer>();
-        timingObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -61,13 +54,13 @@ public class NoteLong : Note
                 }
                 break;
             case NoteState.Appeared:
-                timingTransform.localScale = Vector3.one * (delta * 2f);
+                timingObject.SetTimingScale(delta);
                 if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
-                timingTransform.localScale = Vector3.one * (delta * 2f);
+                timingObject.SetTimingScale(delta);
                 if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }

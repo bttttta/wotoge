@@ -499,6 +499,7 @@ Transform:
   m_Children:
   - {fileID: 1737934828}
   - {fileID: 1108281293}
+  - {fileID: 1485877998}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -739,7 +740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9204bfa78bfebe043b40d4d0959d2931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notesManager: {fileID: 229276151}
   MusicPlayer: {fileID: 1669326337}
 --- !u!4 &1060225867
 Transform:
@@ -838,7 +838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2319761ff33bdd648b3e0bee448d44f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NotesManager: {fileID: 229276151}
 --- !u!4 &1481949105
 Transform:
   m_ObjectHideFlags: 0
@@ -854,6 +853,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1485877997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1485877998}
+  - component: {fileID: 1485877999}
+  m_Layer: 0
+  m_Name: TimingObjectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1485877998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485877997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 535120663}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485877999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485877997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad39777e1ac83644e95cb50ba658c061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefubTimingTap: {fileID: -5356296665319519920, guid: d7ef4006446ddf648b9741453408d47c, type: 3}
+  PrefubTimingFlick: {fileID: 8345192937525480144, guid: 6c619ed2f2ce631409b5c5a52596c967, type: 3}
+  PrefubTimingLong: {fileID: 3375939056505160307, guid: 5765990a68c8d5342b18fd132ae9ddf6, type: 3}
+  PrefubTimingSlide: {fileID: -2722618151206159979, guid: 2cd368478b1705446ba30062a27dd85a, type: 3}
 --- !u!1 &1669326336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,9 +1061,6 @@ MonoBehaviour:
   PrefubJust: {fileID: 2447299708992039654, guid: 8d15dfa4f19e17b40bc70096ca1af08e, type: 3}
   PrefubNear: {fileID: 2447299708992039654, guid: a4bfd92ff43485144ba57fd911bb2575, type: 3}
   PrefubFar: {fileID: 2447299708992039654, guid: 25610e081a8d9264d8d57adbb51c0edd, type: 3}
-  SpriteJust: {fileID: 1898533463, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
-  SpriteNear: {fileID: -1399101396, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
-  SpriteFar: {fileID: 1431124425, guid: 04f609b8be7540745ab5079616b04a7c, type: 3}
 --- !u!4 &1737934828
 Transform:
   m_ObjectHideFlags: 0
