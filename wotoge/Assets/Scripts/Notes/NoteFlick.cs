@@ -3,36 +3,25 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class NoteFlick : Note
-{
+public class NoteFlick : Note {
     public float angle; // äpìx(degree) 0Ç≈è„ÅA90Ç≈ç∂
 
-    Transform noteTransform;
-    SpriteRenderer noteSpriteRenderer;
-    Vector3 notePosition;
-
-    public NoteFlick(){
+    public NoteFlick() {
         type_str = "flick";
         type = NoteType.Flick;
     }
 
     // Start is called before the first frame update
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
         noteObject = CreateNoteGameObject(NoteType.Flick);
-        noteTransform = noteObject.transform;
-        noteTransform.position = new Vector3(pos.x, pos.y, 0);
-        noteTransform.eulerAngles = new Vector3(0, 0, angle);
-        noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
-        noteObject.SetActive(false);
+        noteObject.EulerAngles = new Vector3(0, 0, angle);
         timingObject = CreateTimingGameObject(NoteType.Flick);
-        timingObject.EularAngles = noteTransform.eulerAngles;
+        timingObject.EulerAngles = noteObject.EulerAngles;
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
+    protected override void Update() {
         base.Update();
         var delta = DeltaBeat();
         switch(state) {
@@ -65,8 +54,6 @@ public class NoteFlick : Note
             case NoteState.Lost:
                 noteObject.SetActive(false);
                 timingObject.SetActive(false);
-                noteTransform.localScale = Vector3.one;
-                noteTransform.eulerAngles = Vector3.zero;
                 judge = JudgeType.Far;
                 CreateJudgeGameObject(judge);
                 state = NoteState.Judged;

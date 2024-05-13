@@ -18,7 +18,7 @@ public class TimingObjectManager : SingletonMonoBehaviour<TimingObjectManager> {
             NoteType.Slide => PrefubTimingSlide,
             _ => null,
         };
-        ObjectTiming gameObject = Instantiate<ObjectTiming>(prefub, position, Quaternion.identity, parent);
+        ObjectTiming gameObject = Instantiate(prefub, position, Quaternion.identity, parent);
         gameObject.name = $"{parent.name}_Timing";
         return gameObject;
     }

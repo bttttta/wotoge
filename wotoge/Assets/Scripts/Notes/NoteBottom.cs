@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class NoteBottom : Note
-{
+public class NoteBottom : Note {
     private int lane; // ノートの出るレーン。0/1/2/3
     public int Lane {
         get { return lane; }
@@ -14,35 +13,24 @@ public class NoteBottom : Note
         }
     }
 
-    Transform noteTransform;
-    SpriteRenderer spriteRenderer;
-    Vector3 position;
-
     const int bottom_bar_y = 160;
     const int bottom_size = 1080 / 4;
     const int bottom_speed = (1920 - 160) / 4;
 
-    public NoteBottom(){
+    public NoteBottom() {
         type_str = "bottom";
         type = NoteType.Bottom;
         pos = new int2(0, 2000);
     }
 
     // Start is called before the first frame update
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
         noteObject = CreateNoteGameObject(NoteType.Bottom);
-        noteTransform = noteObject.transform;
-        spriteRenderer = noteObject.GetComponent<SpriteRenderer>();
-        position = new Vector3((float)((0.5 + lane) * bottom_size), 2000, 0);
-        noteTransform.position = new Vector3(pos.x, pos.y, 0);
-        noteObject.SetActive(false);
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
+    protected override void Update() {
         base.Update();
         var delta = DeltaBeat();
         SetPosY();
@@ -54,13 +42,13 @@ public class NoteBottom : Note
                 }
                 break;
             case NoteState.Appeared:
-                noteTransform.position = new Vector3(pos.x, pos.y, 0);
+                noteObject.Position = new Vector3(pos.x, pos.y, 0);
                 if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
-                noteTransform.position = new Vector3(pos.x, pos.y, 0);
+                noteObject.Position = new Vector3(pos.x, pos.y, 0);
                 if(timeManager.music_time - time > time_far) {
                     state = NoteState.Lost;
                 }

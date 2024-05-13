@@ -15,10 +15,6 @@ public class NoteLong : Note
 
     public FingerPath HoldingFinger; // í∑âüÇµç≈íÜÇÃéw
 
-    Transform noteTransform;
-    SpriteRenderer noteSpriteRenderer;
-    Vector3 notePosition;
-
     public NoteLong(){
         type_str = "long";
         type = NoteType.Long;
@@ -33,10 +29,6 @@ public class NoteLong : Note
         release_time = timeManager.BeatToTime(release_beat);
 
         noteObject = CreateNoteGameObject(NoteType.Long);
-        noteTransform = noteObject.transform;
-        noteTransform.position = new Vector3(pos.x, pos.y, 0);
-        noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
-        noteObject.SetActive(false);
         timingObject = CreateTimingGameObject(NoteType.Long);
     }
 

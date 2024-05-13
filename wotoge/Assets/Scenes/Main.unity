@@ -479,7 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 535120663}
   m_Layer: 0
-  m_Name: SpriteManagers
+  m_Name: ObjectManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 1108281293}
   - component: {fileID: 1108281294}
   m_Layer: 0
-  m_Name: NoteSpriteManager
+  m_Name: NoteObjectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,15 +800,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed53553664ba2e41ba226fcb3db83e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteBottom: {fileID: 21300000, guid: 5c077b728e523b5408e35c4502a921b9, type: 3}
-  SpriteTap: {fileID: 1836462156, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteFlick: {fileID: -43448486, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteLong: {fileID: -329122841, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteSlide: {fileID: 1382140892, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteTapTiming: {fileID: -1695047964, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteFlickTiming: {fileID: -1802158051, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteLongTiming: {fileID: 754995488, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
-  SpriteSlideTiming: {fileID: 987347756, guid: 366904e7b3600bd428ae16ba74e65e0d, type: 3}
+  PrefubNoteBottom: {fileID: 3929078573747708871, guid: 7565cadcc4bb5ce40aa802a574ed07bd, type: 3}
+  PrefubNoteTap: {fileID: 8574485342119207682, guid: 286d9615cc16abd449d1b1540b36494d, type: 3}
+  PrefubNoteFlick: {fileID: -370366490989205395, guid: cecb8a4e186a2164c84f54a6913ba1bc, type: 3}
+  PrefubNoteLong: {fileID: -670430939376183476, guid: a3cc83cd16d0c0545852d8e905e62589, type: 3}
+  PrefubNoteSlide: {fileID: -7093827469036834786, guid: f891d48dc6812c2469a7b44040e43154, type: 3}
 --- !u!1 &1481949102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1036,7 @@ GameObject:
   - component: {fileID: 1737934828}
   - component: {fileID: 1737934827}
   m_Layer: 0
-  m_Name: JudgeSpriteManager
+  m_Name: JudgeObjectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

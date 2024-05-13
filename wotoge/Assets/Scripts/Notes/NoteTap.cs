@@ -4,37 +4,26 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Android;
 
-public class NoteTap : Note
-{
-    Transform noteTransform;
-    SpriteRenderer noteSpriteRenderer;
-    Vector3 notePosition;
-
-    public NoteTap(){
+public class NoteTap : Note {
+    public NoteTap() {
         type_str = "tap";
         type = NoteType.Tap;
     }
 
     // Start is called before the first frame update
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
         noteObject = CreateNoteGameObject(NoteType.Tap);
-        noteTransform = noteObject.transform;
-        noteTransform.position = new Vector3(pos.x, pos.y, 0);
-        noteSpriteRenderer = noteObject.GetComponent<SpriteRenderer>();
-        noteObject.SetActive(false);
         timingObject = CreateTimingGameObject(NoteType.Tap);
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
+    protected override void Update() {
         base.Update();
         var delta = DeltaBeat();
         switch(state) {
             case NoteState.NotExisted:
-                if (delta <= 2f) {
+                if(delta <= 2f) {
                     state = NoteState.Appeared;
                     noteObject.SetActive(true);
                     timingObject.SetActive(true);
@@ -42,7 +31,7 @@ public class NoteTap : Note
                 break;
             case NoteState.Appeared:
                 timingObject.SetTimingScale(delta);
-                if (time - timeManager.music_time < time_far) {
+                if(time - timeManager.music_time < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
@@ -83,7 +72,7 @@ public class NoteTap : Note
         // ”»’è‰Â”\‚©
         if(state != NoteState.Ready) { return -1; }
         // ‹——£‚ÌŒvŽZ
-        float distance2 = Mathf.Pow(fingerPath.Position.x - pos.x, 2)  + Mathf.Pow(fingerPath.Position.y - pos.y, 2);
+        float distance2 = Mathf.Pow(fingerPath.Position.x - pos.x, 2) + Mathf.Pow(fingerPath.Position.y - pos.y, 2);
         float tDistance2 = Mathf.Pow(time - timeManager.music_time, 2);
 
         if(fingerPath.Down) {
