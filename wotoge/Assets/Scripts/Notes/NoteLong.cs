@@ -13,6 +13,8 @@ public class NoteLong : Note
     public float switch_start_beat; // 長押しを中断したタイミング。拍
     public float switch_start_time; // 長押しを中断したタイミング。秒
 
+    public const float switch_limit_beat = 2.5f; // Breakにならない限界の離してからの時間。拍
+
     public FingerPath HoldingFinger; // 長押し最中の指
 
     public NoteLong(){
@@ -37,6 +39,7 @@ public class NoteLong : Note
     {
         base.Update();
         var delta = DeltaBeat();
+        var delta_release = DeltaBeat(timeManager.music_time - release_time + time);
         switch(state) {
             case NoteState.NotExisted:
                 if(delta <= 2f) {
@@ -58,17 +61,12 @@ public class NoteLong : Note
                 }
                 break;
             case NoteState.Hit:
-                timingObject.SetActive(false);
                 judge = GetJudgeNow();
                 CreateJudgeGameObject(judge);
                 state = NoteState.Hold;
                 break;
             case NoteState.Hold:
-                // 押したときの判定を時間経過で消す
-                result_time += Time.deltaTime;
-                if(result_time >= time_result) {
-                    judgeObject.SetActive(false);
-                }
+                timingObject.SetTimingScale(delta_release);
                 // 判定
                 if(HoldingFinger.IsActive) {
                     if(timeManager.music_time - release_time > time_near) {
@@ -82,16 +80,39 @@ public class NoteLong : Note
                     }
                 } else {
                     // 離した瞬間
-                    Debug.Log($"release {timeManager.music_time}/{release_time}/{time_near}");
                     if(Mathf.Abs(timeManager.music_time - release_time) <= time_near) {
+                        Debug.Log($"release {timeManager.music_time}/{release_time}/{time_near}");
                         judge = JudgeType.Just;
                         timingObject.SetActive(false);
                         noteObject.SetActive(false);
                         CreateJudgeGameObject(judge);
                         state = NoteState.Judged;
                     } else {
+                        Debug.Log($"switch {timeManager.music_time}/{release_time}/{time_near}");
+                        switch_start_time = timeManager.music_time;
+                        switch_start_beat = timeManager.music_beat;
                         state = NoteState.Switch;
                     }
+                }
+                break;
+            case NoteState.Switch:
+                // 押し直し判定はCheckHitで実施
+                if(timeManager.music_time - release_time > time_near) {
+                    // 早Near判定より前に離して、その後押し直さなかった
+                    judge = JudgeType.Far;
+                    timingObject.SetActive(false);
+                    noteObject.SetActive(false);
+                    CreateJudgeGameObject(judge);                    
+                    state = NoteState.Judged;
+                } else if(timeManager.music_beat - switch_start_beat > switch_limit_beat) {
+                    // 押し直さないまま一定時間経過(Break)
+                    judge = JudgeType.Far;
+                    timingObject.SetActive(false);
+                    noteObject.SetActive(false);
+                    CreateJudgeGameObject(judge);
+                    state = NoteState.Judged;
+                } else {
+                    timingObject.SetTimingScale(delta_release);
                 }
                 break;
             case NoteState.Lost:
@@ -99,6 +120,8 @@ public class NoteLong : Note
                 judge = JudgeType.Far;
                 CreateJudgeGameObject(judge);
                 state = NoteState.Switch;
+                switch_start_time = timeManager.music_time;
+                switch_start_beat = timeManager.music_beat;
                 break;
             case NoteState.Judged:
                 result_time += Time.deltaTime;
