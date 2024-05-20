@@ -35,6 +35,6 @@ public class ObjectTiming : MonoBehaviour {
     // タイミングに依存する枠の大きさ倍率を変更
     public void SetTimingScale(float deltaBeat) {
         timingScale = deltaBeat * 2f;
-        transform.localScale = Vector3.one * timingScale;
+        transform.localScale = Vector3.one * (timingScale + 1);
     }
 }
