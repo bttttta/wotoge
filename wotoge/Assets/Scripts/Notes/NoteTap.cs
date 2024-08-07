@@ -44,16 +44,12 @@ public class NoteTap : Note {
             case NoteState.Hit:
                 noteObject.SetActive(false);
                 timingObject.SetActive(false);
-                judge = GetJudgeNow();
-                CreateJudgeGameObject(judge);
-                state = NoteState.Judged;
+                OnJudge(false);
                 break;
             case NoteState.Lost:
                 noteObject.SetActive(false);
                 timingObject.SetActive(false);
-                judge = JudgeType.Far;
-                CreateJudgeGameObject(judge);
-                state = NoteState.Judged;
+                OnJudge(false, JudgeType.Far);
                 break;
             case NoteState.Judged:
                 result_time += Time.deltaTime;

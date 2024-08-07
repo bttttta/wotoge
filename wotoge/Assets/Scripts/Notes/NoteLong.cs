@@ -61,8 +61,7 @@ public class NoteLong : Note
                 }
                 break;
             case NoteState.Hit:
-                judge = GetJudgeNow();
-                CreateJudgeGameObject(judge);
+                OnJudge(false);
                 state = NoteState.Hold;
                 break;
             case NoteState.Hold:
@@ -72,21 +71,17 @@ public class NoteLong : Note
                     if(timeManager.music_time - release_time > time_near) {
                         Debug.Log($"osippa {timeManager.music_time}/{release_time}/{time_near}");
                         // ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Ìê‡
-                        judge = JudgeType.Near;
+                        OnJudge(true, JudgeType.Near);
                         timingObject.SetActive(false);
                         noteObject.SetActive(false);
-                        CreateJudgeGameObject(judge);
-                        state = NoteState.Judged;
                     }
                 } else {
                     // —£‚µ‚½uŠÔ
                     if(Mathf.Abs(timeManager.music_time - release_time) <= time_near) {
                         Debug.Log($"release {timeManager.music_time}/{release_time}/{time_near}");
-                        judge = JudgeType.Just;
+                        OnJudge(true, JudgeType.Just);
                         timingObject.SetActive(false);
                         noteObject.SetActive(false);
-                        CreateJudgeGameObject(judge);
-                        state = NoteState.Judged;
                     } else {
                         Debug.Log($"switch {timeManager.music_time}/{release_time}/{time_near}");
                         switch_start_time = timeManager.music_time;
@@ -99,26 +94,21 @@ public class NoteLong : Note
                 // ‰Ÿ‚µ’¼‚µ”»’è‚ÍCheckHit‚ÅÀ{
                 if(timeManager.music_time - release_time > time_near) {
                     // ‘Near”»’è‚æ‚è‘O‚É—£‚µ‚ÄA‚»‚ÌŒã‰Ÿ‚µ’¼‚³‚È‚©‚Á‚½
-                    judge = JudgeType.Far;
+                    OnJudge(false, JudgeType.Far);
                     timingObject.SetActive(false);
                     noteObject.SetActive(false);
-                    CreateJudgeGameObject(judge);                    
-                    state = NoteState.Judged;
                 } else if(timeManager.music_beat - switch_start_beat > switch_limit_beat) {
                     // ‰Ÿ‚µ’¼‚³‚È‚¢‚Ü‚Üˆê’èŠÔŒo‰ß(Break)
-                    judge = JudgeType.Far;
+                    OnJudge(false, JudgeType.Far);
                     timingObject.SetActive(false);
                     noteObject.SetActive(false);
-                    CreateJudgeGameObject(judge);
-                    state = NoteState.Judged;
                 } else {
                     timingObject.SetTimingScale(delta_release);
                 }
                 break;
             case NoteState.Lost:
                 timingObject.SetActive(false);
-                judge = JudgeType.Far;
-                CreateJudgeGameObject(judge);
+                OnJudge(false, JudgeType.Far);
                 state = NoteState.Switch;
                 switch_start_time = timeManager.music_time;
                 switch_start_beat = timeManager.music_beat;

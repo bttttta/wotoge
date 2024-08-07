@@ -16,6 +16,7 @@ public enum NoteState {
 }
 
 public abstract class Note : MonoBehaviour {
+    public int id; // ノーツID
     public string type_str; // ノーツの種類名
     public NoteType type; // ノーツの種類
     public float beat; // 出るタイミング。拍
@@ -34,6 +35,7 @@ public abstract class Note : MonoBehaviour {
     protected TimingObjectManager timingObjectManager;
     protected JudgeObjectManager judgeObjectManager;
     protected TimeManager timeManager;
+    protected ScoreManager scoreManager;
 
     public float result_time = 0f; // 判定表示された時間
     public const float time_result = 1f; // 判定表示される時間
@@ -47,6 +49,7 @@ public abstract class Note : MonoBehaviour {
         judgeObjectManager = JudgeObjectManager.Instance;
         timingObjectManager = TimingObjectManager.Instance;
         timeManager = TimeManager.Instance;
+        scoreManager = ScoreManager.Instance;
         time = timeManager.BeatToTime(beat);
     }
 
@@ -97,5 +100,16 @@ public abstract class Note : MonoBehaviour {
     protected GameObject CreateJudgeGameObject(JudgeType judgeType) {
         Vector3 position = new Vector3(pos.x, pos.y, 0);
         return judgeObjectManager.Instantiate(judgeType, position, this.transform);
+    }
+
+    // 判定した後の処理
+    // forceJudgeType: 強制で指定する判定タイプ
+    protected void OnJudge(bool isRelease, JudgeType forceJudgeType = JudgeType.None) {
+        judge = forceJudgeType == JudgeType.None ? GetJudgeNow() : forceJudgeType;
+        CreateJudgeGameObject(judge);
+        state = NoteState.Judged;
+
+        Judge judgeResult = new Judge { NoteId = id, IsRelease = isRelease, Type = judge, delta = timeManager.music_time - time };
+        scoreManager.AddJudge(judgeResult);
     }
 }

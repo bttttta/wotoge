@@ -36,6 +36,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                 switch(note.type) {
                     case "bottom":
                         NoteBottom bottom = go.AddComponent<NoteBottom>();
+                        bottom.id = note.id;
                         bottom.beat = note.time;
                         bottom.Lane = note.lane;
                         bottom.bpm = bpm;
@@ -43,6 +44,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         break;
                     case "tap":
                         NoteTap tap = go.AddComponent<NoteTap>();
+                        tap.id = note.id;
                         tap.beat = note.time;
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
@@ -50,6 +52,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         break;
                     case "flick":
                         NoteFlick flick = go.AddComponent<NoteFlick>();
+                        flick.id = note.id;
                         flick.beat = note.time;
                         flick.pos = new Unity.Mathematics.int2(note.x, note.y);
                         flick.bpm = bpm;
@@ -58,6 +61,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         break;
                     case "long":
                         NoteLong nLong = go.AddComponent<NoteLong>();
+                        nLong.id = note.id;
                         nLong.beat = note.time;
                         nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
                         nLong.length = note.length;
