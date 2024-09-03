@@ -9,6 +9,7 @@ public class Event : MonoBehaviour
     public float beat; // 出るタイミング。拍
     public float time; // 出るタイミング。秒
     public float bpm; // 出るときのBPM
+    public float offset; // 出るタイミングにおけるオフセット
 
     // Start is called before the first frame update
     void Start()

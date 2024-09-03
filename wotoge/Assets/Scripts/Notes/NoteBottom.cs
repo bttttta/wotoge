@@ -43,13 +43,13 @@ public class NoteBottom : Note {
                 break;
             case NoteState.Appeared:
                 noteObject.Position = new Vector3(pos.x, pos.y, 0);
-                if(time - timeManager.music_time < time_far) {
+                if(DeltaSecond() < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
                 noteObject.Position = new Vector3(pos.x, pos.y, 0);
-                if(timeManager.music_time - time > time_far) {
+                if(-DeltaSecond() > time_far) {
                     state = NoteState.Lost;
                 }
                 break;

@@ -21,7 +21,11 @@ public abstract class Note : MonoBehaviour {
     public NoteType type; // ノーツの種類
     public float beat; // 出るタイミング。拍
     public float time; // 出るタイミング。秒
+    public float length; // 長押しの時間。拍
+    public float release_beat; // 長押しを離すタイミング。拍
+    public float release_time; // 長押しを離すタイミング。秒
     public float bpm; // 出るときのBPM
+    public float offset; // 出るタイミングにおけるオフセット
     public int2 pos; // ノートの出る座標
     public NoteState state = NoteState.NotExisted;
     public JudgeType judge;
@@ -67,17 +71,37 @@ public abstract class Note : MonoBehaviour {
 
     }
 
+    // timeまで何秒あるか
+    // timeがthis.timeより後なら+, 前なら-
+    // time=nullなら現在時刻
+    protected float DeltaSecond(float? time = null) {
+        float delta = this.time - (time ?? timeManager.music_time) + offset;
+        return delta;
+    }
+
     // timeまで何拍あるか
     protected float DeltaBeat(float? time = null) {
-        float delta = this.time - (time ?? timeManager.music_time);
-        return delta * (bpm / 60);
+        return DeltaSecond(time) * (bpm / 60);
+    }
+
+    // timeまで何秒あるか
+    // timeがthis.releasetimeより後なら+, 前なら-
+    // time=nullなら現在時刻
+    protected float DeltaReleaseSecond(float? time = null) {
+        float delta = this.release_time - (time ?? timeManager.music_time) + offset;
+        return delta;
+    }
+
+    // timeまで何拍あるか
+    protected float DeltaReleaseBeat(float? time = null) {
+        return DeltaReleaseSecond(time) * (bpm / 60);
     }
 
     // 今判定したらどの判定になるか 時刻差のみを見る
     protected JudgeType GetJudgeNow() {
-        if(Mathf.Abs(time - timeManager.music_time) <= time_just) {
+        if(Mathf.Abs(DeltaSecond()) <= time_just) {
             return JudgeType.Just;
-        } else if(Mathf.Abs(time - timeManager.music_time) <= time_near) {
+        } else if(Mathf.Abs(DeltaSecond()) <= time_near) {
             return JudgeType.Near;
         } else {
             return JudgeType.Far;
@@ -109,7 +133,7 @@ public abstract class Note : MonoBehaviour {
         CreateJudgeGameObject(judge);
         state = NoteState.Judged;
 
-        Judge judgeResult = new Judge { NoteId = id, IsRelease = isRelease, Type = judge, delta = timeManager.music_time - time };
+        Judge judgeResult = new Judge { NoteId = id, IsRelease = isRelease, Type = judge, delta = -DeltaSecond() };
         scoreManager.AddJudge(judgeResult);
     }
 }

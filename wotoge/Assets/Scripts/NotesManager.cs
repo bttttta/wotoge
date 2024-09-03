@@ -30,6 +30,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
         List<Event> events = new List<Event>(stageData.Notes.Length);
 
         float bpm = 120;
+        float offset = 0;
         foreach(NoteData note in stageData.Notes) {
             if(note.IsNote()) {
                 GameObject go = new GameObject($"Note_{note.id}");
@@ -40,6 +41,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         bottom.beat = note.time;
                         bottom.Lane = note.lane;
                         bottom.bpm = bpm;
+                        bottom.offset = offset;
                         notes.Add(bottom);
                         break;
                     case "tap":
@@ -48,6 +50,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         tap.beat = note.time;
                         tap.pos = new Unity.Mathematics.int2(note.x, note.y);
                         tap.bpm = bpm;
+                        tap.offset = offset;
                         notes.Add(tap);
                         break;
                     case "flick":
@@ -56,6 +59,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         flick.beat = note.time;
                         flick.pos = new Unity.Mathematics.int2(note.x, note.y);
                         flick.bpm = bpm;
+                        flick.offset = offset;
                         flick.angle = note.angle;
                         notes.Add(flick);
                         break;
@@ -66,6 +70,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                         nLong.pos = new Unity.Mathematics.int2(note.x, note.y);
                         nLong.length = note.length;
                         nLong.bpm = bpm;
+                        nLong.offset = offset;
                         notes.Add(nLong);
                         break;
                 }
@@ -83,6 +88,10 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                     case "bpm":
                         bpm = note.value;
                         nEvent.bpm = bpm;
+                        break;
+                    case "offset":
+                        offset = note.value;
+                        nEvent.offset = offset;
                         break;
                     default:
                         break;

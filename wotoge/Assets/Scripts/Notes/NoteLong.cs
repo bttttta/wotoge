@@ -5,11 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class NoteLong : Note
-{
-    public float length; // 長押しの時間。拍
-    public float release_beat; // 長押しを離すタイミング。拍
-    public float release_time; // 長押しを離すタイミング。秒
+public class NoteLong : Note {
     public float switch_start_beat; // 長押しを中断したタイミング。拍
     public float switch_start_time; // 長押しを中断したタイミング。秒
 
@@ -17,14 +13,13 @@ public class NoteLong : Note
 
     public FingerPath HoldingFinger; // 長押し最中の指
 
-    public NoteLong(){
+    public NoteLong() {
         type_str = "long";
         type = NoteType.Long;
     }
 
     // Start is called before the first frame update
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
 
         release_beat = beat + length;
@@ -35,8 +30,7 @@ public class NoteLong : Note
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
+    protected override void Update() {
         base.Update();
         var delta = DeltaBeat();
         var delta_release = DeltaBeat(timeManager.music_time - release_time + time);
@@ -50,13 +44,13 @@ public class NoteLong : Note
                 break;
             case NoteState.Appeared:
                 timingObject.SetTimingScale(delta);
-                if(time - timeManager.music_time < time_far) {
+                if(DeltaSecond() < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
                 timingObject.SetTimingScale(delta);
-                if(timeManager.music_time - time > time_far) {
+                if(-DeltaSecond() > time_far) {
                     state = NoteState.Lost;
                 }
                 break;
@@ -68,7 +62,7 @@ public class NoteLong : Note
                 timingObject.SetTimingScale(delta_release);
                 // 判定
                 if(HoldingFinger.IsActive) {
-                    if(timeManager.music_time - release_time > time_near) {
+                    if(-DeltaReleaseSecond() > time_near) {
                         Debug.Log($"osippa {timeManager.music_time}/{release_time}/{time_near}");
                         // 押しっぱなしの場合
                         OnJudge(true, JudgeType.Near);
@@ -77,7 +71,7 @@ public class NoteLong : Note
                     }
                 } else {
                     // 離した瞬間
-                    if(Mathf.Abs(timeManager.music_time - release_time) <= time_near) {
+                    if(Mathf.Abs(DeltaReleaseSecond()) <= time_near) {
                         Debug.Log($"release {timeManager.music_time}/{release_time}/{time_near}");
                         OnJudge(true, JudgeType.Just);
                         timingObject.SetActive(false);
@@ -92,7 +86,7 @@ public class NoteLong : Note
                 break;
             case NoteState.Switch:
                 // 押し直し判定はCheckHitで実施
-                if(timeManager.music_time - release_time > time_near) {
+                if(-DeltaReleaseSecond() > time_near) {
                     // 早Near判定より前に離して、その後押し直さなかった
                     OnJudge(false, JudgeType.Far);
                     timingObject.SetActive(false);
@@ -131,7 +125,7 @@ public class NoteLong : Note
         if(state != NoteState.Ready && state != NoteState.Switch) { return -1; }
         // 距離の計算
         float distance2 = Mathf.Pow(fingerPath.Position.x - pos.x, 2) + Mathf.Pow(fingerPath.Position.y - pos.y, 2);
-        float tDistance2 = Mathf.Pow(time - timeManager.music_time, 2);
+        float tDistance2 = Mathf.Pow(DeltaSecond(), 2);
 
         if(fingerPath.Down) {
             // 押し判定

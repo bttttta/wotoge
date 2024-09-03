@@ -31,13 +31,13 @@ public class NoteTap : Note {
                 break;
             case NoteState.Appeared:
                 timingObject.SetTimingScale(delta);
-                if(time - timeManager.music_time < time_far) {
+                if(DeltaSecond() < time_far) {
                     state = NoteState.Ready;
                 }
                 break;
             case NoteState.Ready:
                 timingObject.SetTimingScale(delta);
-                if(timeManager.music_time - time > time_far) {
+                if(-DeltaSecond() > time_far) {
                     state = NoteState.Lost;
                 }
                 break;
@@ -69,7 +69,7 @@ public class NoteTap : Note {
         if(state != NoteState.Ready) { return -1; }
         // ‹——£‚ÌŒvŽZ
         float distance2 = Mathf.Pow(fingerPath.Position.x - pos.x, 2) + Mathf.Pow(fingerPath.Position.y - pos.y, 2);
-        float tDistance2 = Mathf.Pow(time - timeManager.music_time, 2);
+        float tDistance2 = Mathf.Pow(DeltaSecond(), 2);
 
         if(fingerPath.Down) {
             // ‰Ÿ‚µ”»’è
