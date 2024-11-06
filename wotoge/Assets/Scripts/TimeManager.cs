@@ -9,8 +9,11 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager> {
     NotesManager notesManager; // BPMイベント監視用
     AudioSource SE_metronome; // メトロノーム音を鳴らす用の Audio Source
     Event[] bpmEvents; // BPM変更イベントのリスト
+    Event[] offsetEvents; // Offset変更イベントのリスト
     float currentBpm; // 現在のBPM
     float startBpm; // 開始時のBPM
+    float currentOffset; // 現在のOffset
+    float startOffset; // 開始時のOffset
 
     const float intro_beats = 6; // シーン開始から曲開始までの時間。拍
 
@@ -23,7 +26,9 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager> {
         SE_metronome = GetComponent<AudioSource>();
         notesManager = NotesManager.Instance;
         bpmEvents = notesManager.Events.Where(e => e.type == "bpm").ToArray();
+        offsetEvents = notesManager.Events.Where(e => e.type == "offset").ToArray();
         startBpm = currentBpm = (bpmEvents.Length > 0) ? (bpmEvents[0].value) : 120;
+        startOffset = currentOffset = (offsetEvents.Length > 0) ? (offsetEvents[0].value) : 0;
         scene_time = 0;
         music_time = -intro_beats * BeatLength(currentBpm);
     }
@@ -35,7 +40,7 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager> {
         }
         for(int i = 1; i <= 4; i++) {
             float introTime = -BeatLength(currentBpm) * i;
-            if(music_time < introTime && music_time + Time.deltaTime >= introTime) {
+            if(music_time < introTime + startOffset && music_time + Time.deltaTime >= introTime + startOffset) {
                 SE_metronome.Play();
             }
         }
