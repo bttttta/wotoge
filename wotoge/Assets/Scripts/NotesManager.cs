@@ -96,6 +96,7 @@ public class NotesManager : SingletonMonoBehaviour<NotesManager> {
                     default:
                         break;
                 }
+                events.Add(nEvent);
             }
 
         }
