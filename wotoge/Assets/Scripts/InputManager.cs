@@ -28,16 +28,18 @@ public class FingerPath
             float y_delta = (Screen.height - 1920.0f *  scaleWidth) / 2;
             result.y = (position.y - y_delta) / scaleWidth;
         } else { // ‰¡’·¨ƒTƒCƒY‚Íc‚É‡‚í‚¹‚é
-            // TODO
+            float x_delta = (Screen.width - 1080.0f * scaleHeight) / 2;
+            result.x = (position.x - x_delta) / scaleHeight;
+            result.y = position.y / scaleHeight;
         }
         return result;
     }
 
     public void Activate(Vector2 position, int fingerId) {
-        Debug.Log($"Activate at {position}");
         IsActive = true;
         Down = true;
         Position = AdjustPosition(position);
+        Debug.Log($"Activate at {position} -> {Position}");
         StartPosition = this.Position;
         Delta = Vector2.zero;
         FingerId = fingerId;

@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42f77f84472dfd43a3f31ae339ba99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StageJson: {fileID: 4900000, guid: 68b976b539339934fa9a557ba3513430, type: 3}
+  StageJson: {fileID: 4900000, guid: 5b2bc503178177b4fa2bafadde7287aa, type: 3}
 --- !u!4 &229276152
 Transform:
   m_ObjectHideFlags: 0
@@ -1615,7 +1615,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 669c0010a0febad46b9975afba610dec, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c8c8db0a0941e04469885d730485df0f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
